@@ -5,16 +5,19 @@ import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
+const port = Number(process.env.WEB_REACT_PORT) || 4200;
+const previewPort = Number(process.env.WEB_REACT_PREVIEW_PORT) || 4300;
+
 export default defineConfig(() => ({
   root: __dirname,
   cacheDir: '../../../node_modules/.vite/apps/web/web-react',
   server: {
-    port: 4200,
-    host: 'localhost',
+    port: port,
+    host: '0.0.0.0',
   },
   preview: {
-    port: 4300,
-    host: 'localhost',
+    port: previewPort,
+    host: '0.0.0.0',
   },
   plugins: [
     react(),

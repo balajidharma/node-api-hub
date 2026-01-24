@@ -90,7 +90,17 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["default", "^default"]
+    },
+    "@nx/esbuild:esbuild": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^default"]
     }
   },
-  "nxCloudId": "69226a05f6e7dc10ca70d032"
+  "nxCloudId": "69226a05f6e7dc10ca70d032",
+  "pluginsConfig": {
+    "@nx/js": {
+      "analyzeSourceFiles": true
+    }
+  }
 }

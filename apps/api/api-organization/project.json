@@ -1,0 +1,27 @@
+{
+  "name": "api-organization",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/api-organization/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "continuous": true,
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "api-organization:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api-organization:build:development"
+        },
+        "production": {
+          "buildTarget": "api-organization:build:production"
+        }
+      }
+    }
+  }
+}

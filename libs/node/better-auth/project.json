@@ -1,0 +1,19 @@
+{
+  "name": "better-auth",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/node/better-auth/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/node/better-auth",
+        "main": "libs/node/better-auth/src/index.ts",
+        "tsConfig": "libs/node/better-auth/tsconfig.lib.json",
+        "assets": ["libs/node/better-auth/*.md"]
+      }
+    }
+  }
+}
