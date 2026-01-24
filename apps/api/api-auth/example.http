@@ -1,0 +1,41 @@
+
+@port = {{$dotenv API_AUTH_PORT}}
+
+@baseUrl = http://localhost:{{port}}
+
+###
+
+
+GET {{baseUrl}}/api/auth/ok HTTP/1.1
+
+###
+
+POST {{baseUrl}}/api/auth/sign-up/email HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Test User",
+    "username": "testuser",
+    "email": "testuser@example.com",
+    "password": "password"
+}
+
+###
+
+# @name login
+POST {{baseUrl}}/api/auth/sign-in/email HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "testuser@example.com",
+    "password": "password"
+}
+
+###
+
+@authToken = {{login.response.body.token}}
+
+GET {{baseUrl}}/api/auth/protected HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+###
