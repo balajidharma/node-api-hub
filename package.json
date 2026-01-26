@@ -2,12 +2,15 @@
   "name": "@node-express-hub/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "database:auth:migrate": "npx @better-auth/cli migrate --config=libs/node/better-auth/src/lib/auth.ts"
+  },
   "private": true,
   "type": "module",
   "devDependencies": {
     "@babel/core": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
+    "@better-auth/cli": "^1.4.17",
     "@eslint/js": "^9.8.0",
     "@nx/cypress": "22.1.1",
     "@nx/esbuild": "22.1.1",
@@ -32,6 +35,7 @@
     "@types/express": "^4.17.21",
     "@types/jest": "30.0.0",
     "@types/node": "20.19.9",
+    "@types/pg": "^8.16.0",
     "@types/react": "19.0.0",
     "@types/react-dom": "19.0.0",
     "@vitejs/plugin-react": "^5.0.2",
@@ -56,7 +60,6 @@
     "nodemon": "^3.1.10",
     "nx": "22.1.1",
     "prettier": "^2.6.2",
-    "prisma": "^6.19",
     "react-refresh": "^0.10.0",
     "ts-jest": "29.4.1",
     "ts-node": "10.9.1",
@@ -72,7 +75,6 @@
   ],
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
-    "@prisma/client": "^6.19",
     "@radix-ui/react-avatar": "^1.1.3",
     "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-collapsible": "^1.1.3",
@@ -101,6 +103,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",
+    "pg": "^8.17.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hook-form": "^7.62.0",
