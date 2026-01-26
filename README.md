@@ -17,12 +17,12 @@
 - You may run the following command in your terminal
 - Windows open WSL2 Linux terminal. [Docker Desktop WSL 2 backend](https://docs.docker.com/desktop/windows/wsl/)
 - Create `.env` file by using `.env.example`
-- ./boat.sh build
-- ./boat.sh up -d
-- ./boat.sh npm install
-- ./boat.sh npm run database:auth:migrate
-- ./boat.sh nx serve api-auth
-- ./boat.sh nx serve web-react
+- `./boat.sh build`
+- `./boat.sh up -d`
+- `./boat.sh npm install`
+- `./boat.sh npm run database:auth:migrate`
+- `./boat.sh nx serve api-auth`
+- `./boat.sh nx serve web-react`
 
 ### Without Docker Desktop
 - Install [Node.js](https://nodejs.org/en/download/)
@@ -30,10 +30,10 @@
 - Clone this repository
 - Create `.env` file by using `.env.example`
 - You may run the following command in your terminal
-- npm install
-- npm run database:auth:migrate
-- nx serve api-auth
-- nx serve web-react
+- `npm install`
+- `npm run database:auth:migrate`
+- `nx serve api-auth`
+- `nx serve web-react`
 
 
 ### Start the auth api server
