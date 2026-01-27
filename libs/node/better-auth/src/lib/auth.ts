@@ -1,6 +1,11 @@
 import { betterAuth } from "better-auth";
 import { username } from "better-auth/plugins"
-import { Pool } from "pg";
+import { PrismaPg } from '@prisma/adapter-pg'
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { PrismaClient } from "@database/prisma-pg";
+
+const adapter = new PrismaPg({ connectionString: process.env['POSTGRES_DATABASE_URL'] })
+const prisma = new PrismaClient({ adapter })
 
 export const auth = betterAuth({
     advanced: {
@@ -22,12 +27,8 @@ export const auth = betterAuth({
 
         },
     },
-    database: new Pool({
-        host: process.env['DB_HOST'] || 'localhost',
-        port: Number(process.env['DB_PORT'] || 5432),
-        user: process.env['DB_USERNAME'] || 'boat',
-        password: process.env['DB_PASSWORD'],
-        database: process.env['DB_DATABASE'],
+    database: prismaAdapter(prisma, {
+        provider: "postgresql"
     }),
     user: {
         modelName: "users",
@@ -35,7 +36,6 @@ export const auth = betterAuth({
             emailVerified: "email_verified",
             createdAt: "created_at",
             updatedAt: "updated_at",
-            displayUsername: "display_username"
         },
     },
     account: {
@@ -72,5 +72,15 @@ export const auth = betterAuth({
             updatedAt: "updated_at",
         },
     },
-    plugins: [username()],
+    plugins: [
+        username({
+            schema: {
+                user: {
+                    fields: {
+                        displayUsername: "display_username",
+                    },
+                },
+            },
+        }),
+    ],
 });

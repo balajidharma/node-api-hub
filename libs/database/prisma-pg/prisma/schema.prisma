@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/client"
+  engineType = "client"
+  moduleFormat  = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Users {
+  id              String     @id @default(dbgenerated("pg_catalog.gen_random_uuid()")) @db.Uuid
+  name            String
+  email           String
+  email_verified  Boolean    @default(false)
+  image           String?
+  created_at      DateTime   @default(now())
+  updated_at      DateTime   @updatedAt
+  username        String?
+  display_username String?
+  sessions       Sessions[]
+  accounts       Accounts[]
+
+  @@unique([email])
+  @@unique([username])
+  @@map("users")
+}
+
+model Sessions {
+  id         String   @id @default(dbgenerated("pg_catalog.gen_random_uuid()")) @db.Uuid
+  expires_at DateTime
+  token      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  ip_address String?
+  user_agent String?
+  user_id    String   @db.Uuid
+  users      Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([user_id])
+  @@map("sessions")
+}
+
+model Accounts {
+  id                       String    @id @default(dbgenerated("pg_catalog.gen_random_uuid()")) @db.Uuid
+  account_id               String
+  provider_id              String
+  user_id                  String    @db.Uuid
+  users                    Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  access_token             String?
+  refresh_token            String?
+  id_token                 String?
+  access_token_expires_at  DateTime?
+  refresh_token_expires_at DateTime?
+  scope                    String?
+  password                 String?
+  created_at               DateTime  @default(now())
+  updated_at               DateTime  @updatedAt
+
+  @@index([user_id])
+  @@map("accounts")
+}
+
+model Verifications {
+  id         String   @id @default(dbgenerated("pg_catalog.gen_random_uuid()")) @db.Uuid
+  identifier String
+  value      String
+  expires_at DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verifications")
+}

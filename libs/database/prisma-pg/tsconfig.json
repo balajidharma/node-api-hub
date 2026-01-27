@@ -1,7 +1,6 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "../../",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "target": "ES2023",
@@ -11,9 +10,6 @@
   "files": [],
   "include": [],
   "references": [
-    {
-      "path": "../../database/prisma-pg"
-    },
     {
       "path": "./tsconfig.lib.json"
     }

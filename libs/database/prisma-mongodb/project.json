@@ -1,0 +1,21 @@
+{
+  "name": "prisma-mongodb",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/database/prisma-mongodb/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "prisma": {
+      "command": "prisma",
+      "options": {
+        "cwd": "libs/database/prisma-mongodb"
+      }
+    },
+    "generate-types": {
+      "command": "prisma generate",
+      "options": {
+        "cwd": "libs/database/prisma-mongodb"
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "prisma-pg",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/database/prisma-pg/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "prisma": {
+      "command": "prisma",
+      "options": {
+        "cwd": "libs/database/prisma-pg"
+      }
+    },
+    "generate-types": {
+      "command": "prisma generate",
+      "options": {
+        "cwd": "libs/database/prisma-pg"
+      }
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/database/prisma-pg",
+        "main": "libs/database/prisma-pg/src/index.ts",
+        "tsConfig": "libs/database/prisma-pg/tsconfig.lib.json",
+        "assets": ["libs/database/prisma-pg/*.md"]
+      }
+    }
+  }
+}
