@@ -3,6 +3,9 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+            args:
+                - WWWUSER=${WWWUSER:-1000}
+                - WWWGROUP=${WWWGROUP:-1000}
         container_name: node-api-hub
         ports:
             - '${API_AUTH_PORT:-3333}:3333'
