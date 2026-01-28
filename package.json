@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "database:auth:generate": "npx @better-auth/cli generate --config=libs/node/better-auth/src/lib/auth.ts",
-    "database:auth:migrate": "npx @better-auth/cli migrate --config=libs/node/better-auth/src/lib/auth.ts"
+    "database:pg:auth:generate": "npx @better-auth/cli generate --config=libs/node/better-auth/src/lib/auth.ts --output=libs/database/prisma-pg/prisma/schema.prisma",
+    "database:pg:prisma:init": "nx run prisma-pg:prisma migrate dev --name init",
+    "database:pg:prisma:generate": "nx run prisma-pg:prisma generate"
   },
   "private": true,
   "type": "module",

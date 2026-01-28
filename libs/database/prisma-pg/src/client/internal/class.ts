@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/client\"\n  engineType   = \"client\"\n  moduleFormat = \"esm\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Users {\n  id               String     @id @default(dbgenerated(\"pg_catalog.gen_random_uuid()\")) @db.Uuid\n  name             String\n  email            String\n  email_verified   Boolean    @default(false)\n  image            String?\n  created_at       DateTime   @default(now())\n  updated_at       DateTime   @updatedAt\n  username         String?\n  display_username String?\n  sessionss        Sessions[]\n  accountss        Accounts[]\n\n  @@unique([email])\n  @@unique([username])\n  @@map(\"users\")\n}\n\nmodel Sessions {\n  id         String   @id @default(dbgenerated(\"pg_catalog.gen_random_uuid()\")) @db.Uuid\n  expires_at DateTime\n  token      String\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n  ip_address String?\n  user_agent String?\n  user_id    String   @db.Uuid\n  users      Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)\n\n  @@unique([token])\n  @@index([user_id])\n  @@map(\"sessions\")\n}\n\nmodel Accounts {\n  id                       String    @id @default(dbgenerated(\"pg_catalog.gen_random_uuid()\")) @db.Uuid\n  account_id               String\n  provider_id              String\n  user_id                  String    @db.Uuid\n  users                    Users     @relation(fields: [user_id], references: [id], onDelete: Cascade)\n  access_token             String?\n  refresh_token            String?\n  id_token                 String?\n  access_token_expires_at  DateTime?\n  refresh_token_expires_at DateTime?\n  scope                    String?\n  password                 String?\n  created_at               DateTime  @default(now())\n  updated_at               DateTime  @updatedAt\n\n  @@index([user_id])\n  @@map(\"accounts\")\n}\n\nmodel Verifications {\n  id         String   @id @default(dbgenerated(\"pg_catalog.gen_random_uuid()\")) @db.Uuid\n  identifier String\n  value      String\n  expires_at DateTime\n  created_at DateTime @default(now())\n  updated_at DateTime @updatedAt\n\n  @@index([identifier])\n  @@map(\"verifications\")\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id              String    @id @default(dbgenerated(\"pg_catalog.gen_random_uuid()\")) @db.Uuid\n  name            String\n  email           String\n  emailVerified   Boolean   @default(false)\n  image           String?\n  createdAt       DateTime  @default(now())\n  updatedAt       DateTime  @updatedAt\n  username        String?\n  displayUsername String?\n  sessions        Session[]\n  accounts        Account[]\n\n  @@unique([email])\n  @@unique([username])\n  @@map(\"user\")\n}\n\nmodel Session {\n  id        String   @id @default(dbgenerated(\"pg_catalog.gen_random_uuid()\")) @db.Uuid\n  expiresAt DateTime\n  token     String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  ipAddress String?\n  userAgent String?\n  userId    String   @db.Uuid\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([token])\n  @@index([userId])\n  @@map(\"session\")\n}\n\nmodel Account {\n  id                    String    @id @default(dbgenerated(\"pg_catalog.gen_random_uuid()\")) @db.Uuid\n  accountId             String\n  providerId            String\n  userId                String    @db.Uuid\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String?\n  refreshToken          String?\n  idToken               String?\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String?\n  password              String?\n  createdAt             DateTime  @default(now())\n  updatedAt             DateTime  @updatedAt\n\n  @@index([userId])\n  @@map(\"account\")\n}\n\nmodel Verification {\n  id         String   @id @default(dbgenerated(\"pg_catalog.gen_random_uuid()\")) @db.Uuid\n  identifier String\n  value      String\n  expiresAt  DateTime\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  @@index([identifier])\n  @@map(\"verification\")\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Users\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email_verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"display_username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sessionss\",\"kind\":\"object\",\"type\":\"Sessions\",\"relationName\":\"SessionsToUsers\"},{\"name\":\"accountss\",\"kind\":\"object\",\"type\":\"Accounts\",\"relationName\":\"AccountsToUsers\"}],\"dbName\":\"users\"},\"Sessions\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"ip_address\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_agent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"Users\",\"relationName\":\"SessionsToUsers\"}],\"dbName\":\"sessions\"},\"Accounts\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"account_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"provider_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"Users\",\"relationName\":\"AccountsToUsers\"},{\"name\":\"access_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refresh_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"access_token_expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"refresh_token_expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"accounts\"},\"Verifications\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"verifications\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"displayUsername\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"}],\"dbName\":\"user\"},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"ipAddress\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userAgent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"}],\"dbName\":\"session\"},\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"},{\"name\":\"accessToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refreshToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"idToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accessTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"refreshTokenExpiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"account\"},\"Verification\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"verification\"}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -61,7 +61,7 @@ export interface PrismaClientConstructor {
    * ```
    * const prisma = new PrismaClient()
    * // Fetch zero or more Users
-   * const users = await prisma.users.findMany()
+   * const users = await prisma.user.findMany()
    * ```
    * 
    * Read more in our [docs](https://pris.ly/d/client).
@@ -83,7 +83,7 @@ export interface PrismaClientConstructor {
  * ```
  * const prisma = new PrismaClient()
  * // Fetch zero or more Users
- * const users = await prisma.users.findMany()
+ * const users = await prisma.user.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -177,44 +177,44 @@ export interface PrismaClient<
   }>>
 
       /**
-   * `prisma.users`: Exposes CRUD operations for the **Users** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Users
-    * const users = await prisma.users.findMany()
+    * const users = await prisma.user.findMany()
     * ```
     */
-  get users(): Prisma.UsersDelegate<ExtArgs, { omit: OmitOpts }>;
+  get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.sessions`: Exposes CRUD operations for the **Sessions** model.
+   * `prisma.session`: Exposes CRUD operations for the **Session** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Sessions
-    * const sessions = await prisma.sessions.findMany()
+    * const sessions = await prisma.session.findMany()
     * ```
     */
-  get sessions(): Prisma.SessionsDelegate<ExtArgs, { omit: OmitOpts }>;
+  get session(): Prisma.SessionDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.accounts`: Exposes CRUD operations for the **Accounts** model.
+   * `prisma.account`: Exposes CRUD operations for the **Account** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Accounts
-    * const accounts = await prisma.accounts.findMany()
+    * const accounts = await prisma.account.findMany()
     * ```
     */
-  get accounts(): Prisma.AccountsDelegate<ExtArgs, { omit: OmitOpts }>;
+  get account(): Prisma.AccountDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.verifications`: Exposes CRUD operations for the **Verifications** model.
+   * `prisma.verification`: Exposes CRUD operations for the **Verification** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Verifications
-    * const verifications = await prisma.verifications.findMany()
+    * const verifications = await prisma.verification.findMany()
     * ```
     */
-  get verifications(): Prisma.VerificationsDelegate<ExtArgs, { omit: OmitOpts }>;
+  get verification(): Prisma.VerificationDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {
