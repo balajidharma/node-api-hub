@@ -1,5 +1,5 @@
 import { betterAuth } from "better-auth";
-import { username } from "better-auth/plugins"
+import { username, admin, organization } from "better-auth/plugins"
 import { PrismaPg } from '@prisma/adapter-pg'
 import { prismaAdapter } from "better-auth/adapters/prisma";
 //import { PrismaClient } from "../../../../database/prisma-pg/src/index";
@@ -32,6 +32,8 @@ export const auth = betterAuth({
         provider: "postgresql"
     }),
     plugins: [
-        username()
+        username(),
+        admin(),
+        organization(),
     ]
 });

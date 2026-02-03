@@ -1,0 +1,10 @@
+{
+    "name": "My Dev Container",
+    "dockerComposeFile": [
+        "../docker-compose.yml"
+    ],
+    "service": "node.test",
+    "workspaceFolder": "/app",
+    "features": {},
+    "remoteUser": "root"
+}
