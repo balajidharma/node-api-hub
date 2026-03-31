@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { toNodeHandler } from "better-auth/node";
-import { organization } from './lib/organization';
+import { auth } from '@node/better-auth';
 
 const app = express();
 
@@ -13,11 +13,11 @@ app.use(
   })
 );
 
-app.all("/api/organization/*", toNodeHandler(auth));
+app.all("/api/auth/organization/*", toNodeHandler(auth));
 
 app.use(express.json());
 
-const port = process.env.API_AUTH_PORT || 3333;
+const port = process.env.API_ORGANIZATION_PORT || 3334;
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });

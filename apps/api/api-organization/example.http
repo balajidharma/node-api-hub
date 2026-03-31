@@ -1,0 +1,47 @@
+
+@authPort = {{$dotenv API_AUTH_PORT}}
+@organizationPort = {{$dotenv API_ORGANIZATION_PORT}}
+
+@authBaseUrl = http://localhost:{{authPort}}
+@organizationBaseUrl = http://localhost:{{organizationPort}}
+###
+
+
+# @name login
+POST {{authBaseUrl}}/api/auth/sign-in/email HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "testuser@example.com",
+    "password": "password"
+}
+
+###
+
+@authToken = {{login.response.body.token}}
+
+###
+
+POST {{organizationBaseUrl}}/api/auth/organization/create HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "name": "New Organization",
+    "slug": "new-organization"
+}
+
+###
+
+GET {{organizationBaseUrl}}/api/auth/organization/list HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+###
+
+POST {{organizationBaseUrl}}/api/auth/organization/check-slug HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "slug": "new-organization"
+}
