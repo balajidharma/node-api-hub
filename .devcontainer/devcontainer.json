@@ -17,5 +17,8 @@
             ]
         }
     },
+    "remoteEnv": {
+        "NX_DAEMON": "true"
+    },
     "remoteUser": "root"
 }

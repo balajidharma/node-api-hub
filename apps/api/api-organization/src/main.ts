@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.all("/api/auth/organization/*", toNodeHandler(auth));
+app.all("/api/auth/organization/*splat", toNodeHandler(auth));
 
 app.use(express.json());
 
